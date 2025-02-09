@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Security;
+using System.Text;
 
 namespace DataStructs;
 
@@ -19,8 +20,8 @@ class Program
     public class LinkedList<T>
     {
         public int count;
-        LinkedListNode<T>? head;
-        LinkedListNode<T>? tail;
+        public LinkedListNode<T>? head;
+        public LinkedListNode<T>? tail;
 
         public LinkedList()
         {
@@ -31,7 +32,7 @@ class Program
 
         public void AddFront(T value)
         {
-            if (head == null) // first item to be added
+            if (head == null)
             {
                 AddFirstNode(value);
                 return;
@@ -44,7 +45,7 @@ class Program
 
         public void AddEnd(T value)
         {
-            if (tail == null) // first item to be added
+            if (tail == null)
             {
                 AddFirstNode(value);
                 return;
@@ -59,16 +60,15 @@ class Program
         public void PrintLinkedList()
         {
             StringBuilder sb = new StringBuilder("");
+            LinkedListNode<T>? current = head;
 
-            while (head != null)
+            while (current is not null)
             {
-                LinkedListNode<T> runner = head;
-
-                sb.Append(head.Value.ToString());
-                string connector = runner.Next is not null ? "->" : ".";
+                sb.Append(current.Value.ToString());
+                string connector = current.Next is not null ? "->" : ".";
                 sb.Append(connector);
-                
-                head = runner.Next;
+
+                current = current.Next;
             }
             Console.WriteLine(sb.ToString());
         }
@@ -81,19 +81,56 @@ class Program
             count++;
         }
     }
+
+
+    public static LinkedList<int> AddTwoLinkedLists(LinkedList<int> l1, LinkedList<int> l2)
+    {
+
+        var result = new LinkedList<int>();
+        var reminder = 0;
+        var currentl1 = l1.head;
+        var currentl2 = l2.head;
+
+        while (currentl1 != null || currentl2 != null)
+        {
+            int val1 = currentl1?.Value ?? 0;
+            int val2 = currentl2?.Value ?? 0;
+
+            var sum = val1 + val2 + reminder;
+
+            result.AddEnd(sum % 10);
+            reminder = sum / 10;
+
+            if (currentl1 != null) currentl1 = currentl1.Next;
+            if (currentl2 != null) currentl2 = currentl2.Next;
+        }
+
+        // If there is a remaining carry, add it as a new node
+        if (reminder > 0)
+        {
+            result.AddEnd(reminder);
+        }
+
+        return result;
+
+    }
     static void Main(string[] args)
     {
-        LinkedList<string> l = new LinkedList<string>();
-        l.AddEnd("Hello");
-        l.AddFront("My");
-        l.AddFront("Friend");
-        l.AddFront("Welcome");
-        l.AddEnd("To");
-        l.AddEnd("My");
-        l.AddFront("Linked List");
-        l.AddEnd("Implementation");
-        Console.WriteLine(l.count);
+        LinkedList<int> l = new LinkedList<int>();
+        l.AddFront(5);
+        l.AddFront(6);
+        l.AddFront(6);
+        l.AddFront(6);
         l.PrintLinkedList();
+
+        LinkedList<int> l1 = new LinkedList<int>();
+        l1.AddFront(2);
+        l1.AddFront(5);
+        l1.AddFront(3);
+        l1.PrintLinkedList();
+
+        LinkedList<int> result = AddTwoLinkedLists(l, l1);
+        result.PrintLinkedList();
 
 
     }

@@ -12,3 +12,4 @@ C:\Users\devmm\Desktop\DataStructs\LinkedList\obj\Debug\net9.0\refint\LinkedList
 C:\Users\devmm\Desktop\DataStructs\LinkedList\obj\Debug\net9.0\LinkedList.pdb
 C:\Users\devmm\Desktop\DataStructs\LinkedList\obj\Debug\net9.0\LinkedList.genruntimeconfig.cache
 C:\Users\devmm\Desktop\DataStructs\LinkedList\obj\Debug\net9.0\ref\LinkedList.dll
+C:\Users\devmm\Desktop\DataStructs\LinkedList\obj\Debug\net9.0\LinkedList.sourcelink.json
