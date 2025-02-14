@@ -82,6 +82,55 @@ class Program
         }
     }
 
+    public static LinkedList<int> DoubleIt(LinkedList<int> list)
+    {
+        if (list.head == null) return list;
+
+        LinkedListNode<int>? prev = null, current = list.head;
+
+        while (current != null)
+        {
+            LinkedListNode<int>? next = current.Next;
+            current.Next = prev;
+            prev = current;
+            current = next;
+        }
+
+        list.head = prev;
+
+        current = list.head;
+        int carry = 0;
+
+        while (current != null)
+        {
+            int newValue = (current.Value * 2) + carry;
+            current.Value = newValue % 10;
+            carry = newValue / 10;
+            prev = current;
+            current = current.Next;
+        }
+
+        if (carry > 0)
+        {
+            prev!.Next = new LinkedListNode<int>(carry);
+        }
+
+        prev = null;
+        current = list.head;
+
+        while (current != null)
+        {
+            LinkedListNode<int>? next = current.Next;
+            current.Next = prev;
+            prev = current;
+            current = next;
+        }
+
+        list.head = prev; 
+
+        return list;
+    }
+
 
     public static LinkedList<int> AddTwoLinkedLists(LinkedList<int> l1, LinkedList<int> l2)
     {
@@ -114,6 +163,8 @@ class Program
         return result;
 
     }
+
+
     static void Main(string[] args)
     {
         LinkedList<int> l = new LinkedList<int>();
@@ -133,5 +184,14 @@ class Program
         result.PrintLinkedList();
 
 
+        LinkedList<int> l3 = new LinkedList<int>();
+        l3.AddFront(6);
+        l3.AddFront(5);
+        l3.AddFront(6);
+        l3.AddFront(8);
+        l3.PrintLinkedList();
+
+        LinkedList<int> resultDoubleIt = DoubleIt(l3);
+        resultDoubleIt.PrintLinkedList();
     }
 }
